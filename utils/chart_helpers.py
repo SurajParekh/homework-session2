@@ -139,8 +139,9 @@ def donut_chart(
         pull=[0.04 if i == 0 else 0 for i in range(len(labels))],
     ))
 
+    layout = {k: v for k, v in BASE_LAYOUT.items() if k != "legend"}
     fig.update_layout(
-        **BASE_LAYOUT,
+        **layout,
         title=dict(text=title, font=dict(size=14, color=TEXT_COLOR), x=0.01),
         height=height,
         showlegend=True,
