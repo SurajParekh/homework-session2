@@ -144,11 +144,17 @@ def donut_chart(
         title=dict(text=title, font=dict(size=14, color=TEXT_COLOR), x=0.01),
         height=height,
         showlegend=True,
-        legend=dict(orientation="v", x=1.02, y=0.5, **{
-            k: v for k, v in BASE_LAYOUT["legend"].items()
-        }),
+        legend=dict(
+            orientation="v",
+            x=1.02,
+            y=0.5,
+            bgcolor=CARD_BG,
+            bordercolor=BORDER_COLOR,
+            borderwidth=1,
+            font=dict(size=11),
+        ),
         annotations=[dict(
-            text=f"<b>{len(series)}</b><br><span style='font-size:10px'>total</span>",
+            text=f"<b>{len(series)}</b><br>total",
             x=0.5, y=0.5, font=dict(size=18, color=TEXT_COLOR),
             showarrow=False,
         )],
@@ -237,6 +243,10 @@ def ocean_grouped_bar(dept_ocean_df: pd.DataFrame, title: str = "OCEAN Compariso
 
 def sunburst_chart(df: pd.DataFrame, title: str = "Dept → Archetype → Comm Style") -> go.Figure:
     """Three-level sunburst: Department → Personality Archetype → Communication Style."""
+    df = df.copy()
+    df["Department"] = df["Department"].astype(str)
+    df["Personality_Archetype"] = df["Personality_Archetype"].astype(str)
+    df["Communication_Style"] = df["Communication_Style"].astype(str)
     fig = px.sunburst(
         df,
         path=["Department", "Personality_Archetype", "Communication_Style"],
@@ -303,6 +313,9 @@ def stacked_bar(
 
 def scatter_collab_leadership(df: pd.DataFrame, color_by: str = "Department") -> go.Figure:
     """Scatter plot: Collaboration Score vs Leadership Potential, coloured by dept/archetype."""
+    df = df.copy()
+    df["Department"] = df["Department"].astype(str)
+    df["Personality_Archetype"] = df["Personality_Archetype"].astype(str)
     color_map = DEPT_COLORS if color_by == "Department" else ARCHETYPE_COLORS
 
     fig = px.scatter(
@@ -484,6 +497,9 @@ def top_employees_bar(
 
 def treemap_archetype_dept(df: pd.DataFrame, title: str = "Archetype Distribution by Department") -> go.Figure:
     """Treemap showing archetype breakdown within each department."""
+    df = df.copy()
+    df["Department"] = df["Department"].astype(str)
+    df["Personality_Archetype"] = df["Personality_Archetype"].astype(str)
     fig = px.treemap(
         df,
         path=[px.Constant("Organisation"), "Department", "Personality_Archetype"],
