@@ -81,7 +81,7 @@ def ocean_radar(data: dict, title: str = "OCEAN Profile") -> go.Figure:
             r=vals_closed,
             theta=cats_closed,
             fill="toself",
-            fillcolor=f"{color}22",
+            opacity=0.3,
             line=dict(color=color, width=2),
             name=label,
             hovertemplate="%{theta}: <b>%{r}</b><extra></extra>",
@@ -387,7 +387,7 @@ def ocean_boxplot(df: pd.DataFrame, trait: str = "Openness", title: str = "") ->
             name=dept,
             marker_color=DEPT_COLORS.get(dept, ACCENT),
             line_color=DEPT_COLORS.get(dept, ACCENT),
-            fillcolor=f"{DEPT_COLORS.get(dept, ACCENT)}33",
+            opacity=0.4,
             boxmean="sd",
             hovertemplate=f"<b>{dept}</b><br>{trait}: %{{y}}<extra></extra>",
         ))
