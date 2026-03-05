@@ -49,14 +49,14 @@ if arch_f != "All": filtered = filtered[filtered["Personality_Archetype"] == arc
 if sen_f  != "All": filtered = filtered[filtered["Seniority_Level"] == sen_f]
 
 # ── Employee selector ──────────────────────────────────────────────────────────
-emp_options = filtered["Employee_ID"] + " — " + filtered["Name"] + " (" + filtered["Department"] + ")"
+emp_options = filtered["Employee_ID"] + " — " + filtered["Name"] + " (" + filtered["Department"].astype(str) + ")"
 selected_str = st.selectbox("Select Employee", emp_options.tolist(), key="emp_select")
 emp_id = selected_str.split(" — ")[0] if selected_str else None
 
 # ── Compare mode ───────────────────────────────────────────────────────────────
 compare_mode = st.checkbox("Compare with another employee", key="compare_toggle")
 if compare_mode:
-    other_options = filtered[filtered["Employee_ID"] != emp_id]["Employee_ID"] + " — " + filtered[filtered["Employee_ID"] != emp_id]["Name"] + " (" + filtered[filtered["Employee_ID"] != emp_id]["Department"] + ")"
+    other_options = filtered[filtered["Employee_ID"] != emp_id]["Employee_ID"] + " — " + filtered[filtered["Employee_ID"] != emp_id]["Name"] + " (" + filtered[filtered["Employee_ID"] != emp_id]["Department"].astype(str) + ")"
     compare_str = st.selectbox("Compare with", other_options.tolist(), key="compare_select")
     compare_id  = compare_str.split(" — ")[0] if compare_str else None
 else:
